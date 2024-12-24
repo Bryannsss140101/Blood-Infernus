@@ -76,4 +76,5 @@ crashlytics-build.properties
 .vsconfig
 
 # Ignore specific Unity test tool configuration file
-/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+BloodInfernus/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+
