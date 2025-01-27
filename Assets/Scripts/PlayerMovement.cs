@@ -32,9 +32,3 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move(velocity);
     }
 }
-/*
- transform.rotation =
-            Quaternion.Slerp(transform.rotation,
-            Quaternion.LookRotation(direction),
-            angularSpeed * Time.deltaTime);
-    }*/
