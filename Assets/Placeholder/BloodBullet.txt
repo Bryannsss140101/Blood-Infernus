@@ -1,0 +1,13 @@
+Bloodshard Barrage: Lanza una ráfaga de fragmentos de sangre endurecida, dañando a los enemigos impactados. 
+Los fragmentos atraviesan a las unidades.
+
+Scarlet Downpour: Dispara una esfera de sangre al cielo, que estalla y libera una lluvia de metralla sangrienta en un área. 
+Los enemigos golpeados reciben daño y son ralentizados por el impacto.
+
+Crimson Deadeye: Aumenta la precisión y la letalidad de los ataques, mejorando la probabilidad de golpe crítico. 
+Los ataques en este estado tienen una mayor afinidad por los puntos débiles del enemigo,
+infligiendo daño adicional en golpes críticos.
+
+Red Requiem:
+Carga una bala de sangre condensada y la dispara con fuerza devastadora. Al impactar, la bala explota, causando daño en área 
+y aplicando un efecto de aturdimiento a los enemigos cercanos.

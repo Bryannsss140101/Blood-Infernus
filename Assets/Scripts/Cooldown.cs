@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cooldown
+public static class Cooldown
 {
-    private Dictionary<string, CooldownData> cooldowns;
+    private static Dictionary<string, CooldownData> cooldowns;
 
-    public Cooldown()
+    static Cooldown()
     {
         cooldowns = new();
     }
 
-    public void SetCooldown(string id, float duration)
+    public static void SetCooldown(string id, float duration)
     {
         if (!cooldowns.ContainsKey(id))
             cooldowns[id] = new(duration);
@@ -20,7 +20,7 @@ public class Cooldown
             cooldowns[id].CurrentTime = duration;
     }
 
-    public void Use(string id)
+    public static void Use(string id)
     {
         if (!cooldowns.ContainsKey(id))
             throw new KeyNotFoundException($"The key '{id}' does not exist.");
@@ -28,7 +28,7 @@ public class Cooldown
         cooldowns[id].LastTime = Time.time;
     }
 
-    public bool IsReady(string id)
+    public static bool IsReady(string id)
     {
         if (!cooldowns.ContainsKey(id))
             throw new KeyNotFoundException($"The key '{id}' does not exist.");
@@ -38,7 +38,7 @@ public class Cooldown
         return Time.time >= cooldown.CurrentTime + cooldown.LastTime;
     }
 
-    public float GetRemainingTime(string id)
+    public static float GetRemainingTime(string id)
     {
         if (!cooldowns.ContainsKey(id))
             throw new KeyNotFoundException($"The key '{id}' does not exist.");
