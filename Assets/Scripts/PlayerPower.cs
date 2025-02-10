@@ -5,28 +5,43 @@ using UnityEngine;
 /// </summary>
 public class PlayerPower : MonoBehaviour
 {
-    [SerializeField] private KeyCode[] keys;
-    [SerializeField] private Power power;
     [SerializeField] private PowerUIController powerUIController;
+
+    private Power power;
 
     public void HandlePower()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            powerUIController.CreateUI(power);
+        if (powerUIController.IsCreated)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+                power.GetAbility(0).Activate();
+
+            if (Input.GetKeyDown(KeyCode.W))
+                power.GetAbility(1).Activate();
+
+            if (Input.GetKeyDown(KeyCode.E))
+                power.GetAbility(2).Activate();
+
+            if (Input.GetKeyDown(KeyCode.R))
+                power.GetAbility(3).Activate();
+        }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
             powerUIController.DestroyUI(power);
+    }
 
-        if (Input.GetKeyDown(keys[0]))
-            power.GetAbility(0).Activate();
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Power"))
+        {
+            if (!this.power)
+                powerUIController.DestroyUI(this.power);
 
-        if (Input.GetKeyDown(keys[1]))
-            power.GetAbility(1).Activate();
-
-        if (Input.GetKeyDown(keys[2]))
-            power.GetAbility(2).Activate();
-
-        if (Input.GetKeyDown(keys[3]))
-            power.GetAbility(3).Activate();
+            if (other.TryGetComponent(out Power power))
+            {
+                this.power = power;
+                powerUIController.CreateUI(this.power);
+            }
+        }
     }
 }

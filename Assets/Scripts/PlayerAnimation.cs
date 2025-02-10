@@ -16,8 +16,8 @@ public class PlayerAnimation : MonoBehaviour
             return;
 
         var direction = new Vector3(
-            Input.GetAxisRaw("Horizontal"), 0f,
-            Input.GetAxisRaw("Vertical"));
+            Input.GetAxisRaw("PHorizontal"), 0f,
+            Input.GetAxisRaw("PVertical"));
 
         if (direction.sqrMagnitude > 1)
             direction.Normalize();

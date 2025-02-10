@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -5,10 +6,10 @@ using UnityEngine;
 /// </summary>
 public class PowerUIController : MonoBehaviour
 {
-    [SerializeField] private GameObject abilityUIPrefab;
-    [SerializeField] private GameObject panel;
-
     private bool isCreated;
+
+    public bool IsCreated { get => isCreated; }
+
 
     /// <summary>
     /// Creates UI elements for the given power's abilities.
@@ -19,19 +20,12 @@ public class PowerUIController : MonoBehaviour
         if (isCreated)
             return;
 
-        var abilities = power.GetAbilities();
-
-        for (int i = 0; i < abilities.Count; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            var abilityUI = Instantiate(abilityUIPrefab,
-                panel.transform).GetComponent<AbilityUI>();
-
+            var abilityUI = transform.GetChild(i).GetComponent<AbilityUI>();
             var ability = power.GetAbility(i);
 
-            abilityUI.name = $"AbilityUI - {i}";
-
             abilityUI.Initialize(ability.Data.Icon, ability.Data.Cooldown);
-
             ability.AbilityActivated += abilityUI.OnActivated;
         }
 
@@ -47,15 +41,15 @@ public class PowerUIController : MonoBehaviour
         if (!isCreated)
             return;
 
-        var abilities = power.GetAbilities();
-
-        for (int i = 0; i < abilities.Count; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            var abilityUI = panel.transform.GetChild(i).GetComponent<AbilityUI>();
+            var abilityUI = transform.GetChild(i).GetComponent<AbilityUI>();
+            var ability = power.GetAbility(i);
 
-            power.GetAbility(i).AbilityActivated -= abilityUI.OnActivated;
+            abilityUI.Initialize(default, default);
+            ability.AbilityActivated -= abilityUI.OnActivated;
 
-            Destroy(abilityUI.gameObject);
+            Cooldown.Reset(ability.Data.AbilityName);
         }
 
         isCreated = false;

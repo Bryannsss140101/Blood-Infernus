@@ -36,7 +36,7 @@ public abstract class Ability : MonoBehaviour
 
     protected virtual void Start()
     {
-        Cooldown.SetCooldown(data.AbilityName, data.Cooldown);
+        Cooldown.Set(data.AbilityName, data.Cooldown);
     }
 
     /// <summary>

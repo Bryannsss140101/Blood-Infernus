@@ -13,7 +13,7 @@ public static class Cooldown
     /// </summary>
     /// <param abilityName="id">The unique identifier.</param>
     /// <param abilityName="duration">The cooldown duration in seconds.</param>
-    public static void SetCooldown(string id, float duration)
+    public static void Set(string id, float duration)
     {
         if (string.IsNullOrEmpty(id))
         {
@@ -37,6 +37,18 @@ public static class Cooldown
             throw new KeyNotFoundException($"Cooldown ID '{id}' not found.");
 
         cooldown.LastTime = Time.time;
+    }
+
+    /// <summary>
+    /// Resets the cooldown, making the action immediately available.
+    /// </summary>
+    /// <param name="id">The unique identifier.</param>
+    public static void Reset(string id)
+    {
+        if (!cooldowns.TryGetValue(id, out var cooldown))
+            throw new KeyNotFoundException($"Cooldown ID '{id}' not found.");
+
+        cooldown.LastTime = -cooldown.CurrentTime;
     }
 
     /// <summary>
