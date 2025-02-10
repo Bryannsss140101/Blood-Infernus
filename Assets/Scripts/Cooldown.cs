@@ -1,54 +1,82 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cooldown
+/// <summary>
+/// Manages cooldowns for actions identified by a string.
+/// </summary>
+public static class Cooldown
 {
-    private Dictionary<string, CooldownData> cooldowns;
+    private static readonly Dictionary<string, CooldownData> cooldowns = new();
 
-    public Cooldown()
+    /// <summary>
+    /// Set a specific cooldown.
+    /// </summary>
+    /// <param abilityName="id">The unique identifier.</param>
+    /// <param abilityName="duration">The cooldown duration in seconds.</param>
+    public static void Set(string id, float duration)
     {
-        cooldowns = new();
-    }
+        if (string.IsNullOrEmpty(id))
+        {
+            Debug.LogWarning("Attempted to set cooldown with an invalid ID.");
+            return;
+        }
 
-    public void SetCooldown(string id, float duration)
-    {
-        if (!cooldowns.ContainsKey(id))
-            cooldowns[id] = new(duration);
+        if (!cooldowns.TryGetValue(id, out var cooldown))
+            cooldowns[id] = new CooldownData(duration);
         else
-            cooldowns[id].CurrentTime = duration;
+            cooldown.CurrentTime = duration;
     }
 
-    public void Use(string id)
+    /// <summary>
+    /// Activates a cooldown, marking its start time.
+    /// </summary>
+    /// <param abilityName="id">The unique identifier.</param>
+    public static void Use(string id)
     {
-        if (!cooldowns.ContainsKey(id))
-            throw new KeyNotFoundException($"The key '{id}' does not exist.");
+        if (!cooldowns.TryGetValue(id, out var cooldown))
+            throw new KeyNotFoundException($"Cooldown ID '{id}' not found.");
 
-        cooldowns[id].LastTime = Time.time;
+        cooldown.LastTime = Time.time;
     }
 
-    public bool IsReady(string id)
+    /// <summary>
+    /// Resets the cooldown, making the action immediately available.
+    /// </summary>
+    /// <param name="id">The unique identifier.</param>
+    public static void Reset(string id)
     {
-        if (!cooldowns.ContainsKey(id))
-            throw new KeyNotFoundException($"The key '{id}' does not exist.");
+        if (!cooldowns.TryGetValue(id, out var cooldown))
+            throw new KeyNotFoundException($"Cooldown ID '{id}' not found.");
 
-        var cooldown = cooldowns[id];
-
-        return Time.time >= cooldown.CurrentTime + cooldown.LastTime;
+        cooldown.LastTime = -cooldown.CurrentTime;
     }
 
-    public float GetRemainingTime(string id)
+    /// <summary>
+    /// Checks if the cooldown is ready to be used again.
+    /// </summary>
+    /// <param abilityName="id">The unique identifier.</param>
+    public static bool IsReady(string id)
     {
-        if (!cooldowns.ContainsKey(id))
-            throw new KeyNotFoundException($"The key '{id}' does not exist.");
+        return cooldowns.TryGetValue(id, out var cooldown) &&
+               Time.time >= cooldown.CurrentTime + cooldown.LastTime;
+    }
 
-        var cooldown = cooldowns[id];
+    /// <summary>
+    /// Gets the remaining time before the cooldown expires.
+    /// </summary>
+    /// <param abilityName="id">The unique identifier.</param>
+    public static float GetRemainingTime(string id)
+    {
+        if (!cooldowns.TryGetValue(id, out var cooldown))
+            throw new KeyNotFoundException($"Cooldown ID '{id}' not found.");
+
         float remaining = (cooldown.CurrentTime + cooldown.LastTime) - Time.time;
-
         return Mathf.Max(remaining, 0);
     }
 
+    /// <summary>
+    /// Represents data from a cooldown.
+    /// </summary>
     private class CooldownData
     {
         public float CurrentTime { get; set; }

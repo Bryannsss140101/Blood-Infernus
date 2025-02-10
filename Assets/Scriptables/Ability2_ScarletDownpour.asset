@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db75c5763ee784e419e7cf1db2ce718a, type: 3}
+  m_Name: Ability2_ScarletDownpour
+  m_EditorClassIdentifier: 
+  abilityName: Scarlet Downpour
+  description: 'Fires a sphere of blood into the sky, which bursts and releases a
+    rain of bloody shrapnel in an area.
+
+    Enemies hit take damage and are slowed
+    on impact.'
+  cooldown: 20
+  icon: {fileID: -1080266160, guid: 415ca634d3e6c3f45a0c3b3584fd27bb, type: 3}
