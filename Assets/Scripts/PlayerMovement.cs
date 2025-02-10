@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
+/// <summary>
+/// Handles player movement.
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
@@ -11,9 +11,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private Vector3 direction;
 
+    /// <summary>
+    /// Manages player movement logic.
+    /// </summary>
     public void HandleMovement()
     {
-        Translatation();
+        Translate();
     }
 
     private void Start()
@@ -21,14 +24,23 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
     }
 
-    private void Translatation()
+    /// <summary>
+    /// Moves the player based on input.
+    /// </summary>
+    private void Translate()
     {
-        direction = new Vector3(
-            Input.GetAxisRaw("Horizontal"), 0f,
-            Input.GetAxisRaw("Vertical")).normalized;
+        if (characterController == null)
+            return;
 
-        velocity = speed * Time.deltaTime * direction;
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
-        characterController.Move(velocity);
+        if (horizontal != 0 || vertical != 0)
+        {
+            direction = new Vector3(horizontal, 0f, vertical).normalized;
+            velocity = speed * Time.deltaTime * direction;
+
+            characterController.Move(velocity);
+        }
     }
 }

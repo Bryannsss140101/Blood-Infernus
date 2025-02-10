@@ -1,3 +1,4 @@
+[ESP]
 Bloodshard Barrage: Lanza una ráfaga de fragmentos de sangre endurecida, dañando a los enemigos impactados. 
 Los fragmentos atraviesan a las unidades.
 
@@ -11,3 +12,20 @@ infligiendo daño adicional en golpes críticos.
 Red Requiem:
 Carga una bala de sangre condensada y la dispara con fuerza devastadora. Al impactar, la bala explota, causando daño en área 
 y aplicando un efecto de aturdimiento a los enemigos cercanos.
+
+[ENG]
+Bloodshard Barrage
+Unleashes a barrage of hardened blood shards, damaging enemies on impact.
+The shards pierce through units.
+
+Scarlet Downpour
+Fires a sphere of blood into the sky, which bursts and releases a rain of bloody shrapnel in an area.
+Enemies hit take damage and are slowed on impact.
+
+Crimson Deadeye
+Enhances accuracy and lethality, increasing the critical hit chance.
+Attacks in this state have a greater affinity for enemy weak points, dealing bonus critical damage.
+
+Red Requiem
+Charges a bullet of condensed blood and fires it with devastating force.
+On impact, the bullet explodes, dealing area damage and stunning nearby enemies.

@@ -1,24 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles player controller.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private PlayerAnimation playerAnimation;
-    // private PlayerPower playerAttack;
+    private PlayerPower playerPower;
 
-    private void Start()
+    private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimation = GetComponent<PlayerAnimation>();
-        // playerAttack = GetComponent<PlayerPower>();
+        playerPower = GetComponent<PlayerPower>();
     }
 
     private void Update()
     {
         playerMovement.HandleMovement();
         playerAnimation.HandleAnimation();
-        // playerAttack.HandleAbility();
+        playerPower.HandlePower();
     }
 }

@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db75c5763ee784e419e7cf1db2ce718a, type: 3}
-  m_Name: AxeAbility4
+  m_Name: Ability4_RedRequiem
   m_EditorClassIdentifier: 
-  name: Culling Blade
-  description: "Axe detecta las debilidades y ataca, infligiendo da\xF1o puro. Cuando
-    un h\xE9roe enemigo es asesinado con Hoja Selectiva, el tiempo de recarga se
-    reinicia y las unidades aliadas cercanas obtienen velocidad de movimiento y armadura
-    adicionales."
+  abilityName: Red Requiem
+  description: 'Charges a bullet of condensed blood and fires it with devastating
+    force.
+
+    On impact, the bullet explodes, dealing area damage and stunning
+    nearby enemies.'
   cooldown: 100
-  icon: {fileID: 21300000, guid: be0192b71d2b64c43971c1fca3119e8e, type: 3}
+  icon: {fileID: -1912862829, guid: 415ca634d3e6c3f45a0c3b3584fd27bb, type: 3}
