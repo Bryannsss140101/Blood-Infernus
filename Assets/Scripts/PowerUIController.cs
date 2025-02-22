@@ -2,54 +2,55 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
-/// Controls the UI elements for displaying power abilities.
+/// Controls the UI elements for displaying power abilitiesUI.
 /// </summary>
 public class PowerUIController : MonoBehaviour
 {
+    [SerializeField] private AbilityUI[] abilitiesUI;
+
     private bool isCreated;
 
     public bool IsCreated { get => isCreated; }
 
 
     /// <summary>
-    /// Creates UI elements for the given power's abilities.
+    /// Settup UI elements for the given power's abilitiesUI.
     /// </summary>
-    /// <param name="power">The power containing abilities.</param>
-    public void CreateUI(Power power)
+    /// <param name="power">The power containing abilitiesUI.</param>
+    public void SettupUI(Power power)
     {
         if (isCreated)
             return;
 
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < abilitiesUI.Length; i++)
         {
-            var abilityUI = transform.GetChild(i).GetComponent<AbilityUI>();
             var ability = power.GetAbility(i);
+            var abilityUI = abilitiesUI[i];
 
-            abilityUI.Initialize(ability.Data.Icon, ability.Data.Cooldown);
-            ability.AbilityActivated += abilityUI.OnActivated;
+            abilityUI.SettupUI(ability.Data);
+            ability.AbilityActivated += abilityUI.CooldownActivated;
         }
 
         isCreated = true;
     }
 
     /// <summary>
-    /// Destroy all UI elements.
+    /// Reset all UI elements.
     /// </summary>
-    /// <param name="power">The power containing abilities.</param>
-    public void DestroyUI(Power power)
+    /// <param name="power">The power containing abilitiesUI.</param>
+    public void ResetUI(Power power)
     {
         if (!isCreated)
             return;
 
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < abilitiesUI.Length; i++)
         {
-            var abilityUI = transform.GetChild(i).GetComponent<AbilityUI>();
             var ability = power.GetAbility(i);
+            var abilityUI = abilitiesUI[i];
 
-            abilityUI.Initialize(default, default);
-            ability.AbilityActivated -= abilityUI.OnActivated;
-
-            Cooldown.Reset(ability.Data.AbilityName);
+            abilityUI.ResetUI();
+            ability.AbilityActivated -= abilityUI.CooldownActivated;
+            Cooldown.Reset(ability.Data.abilityName);
         }
 
         isCreated = false;

@@ -16,6 +16,7 @@ public class PlayerPower : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q))
                 power.GetAbility(0).Activate();
 
+            /*
             if (Input.GetKeyDown(KeyCode.W))
                 power.GetAbility(1).Activate();
 
@@ -23,11 +24,11 @@ public class PlayerPower : MonoBehaviour
                 power.GetAbility(2).Activate();
 
             if (Input.GetKeyDown(KeyCode.R))
-                power.GetAbility(3).Activate();
+                power.GetAbility(3).Activate();*/
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            powerUIController.DestroyUI(power);
+            powerUIController.ResetUI(power);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,12 +36,12 @@ public class PlayerPower : MonoBehaviour
         if (other.CompareTag("Power"))
         {
             if (!this.power)
-                powerUIController.DestroyUI(this.power);
+                powerUIController.ResetUI(this.power);
 
             if (other.TryGetComponent(out Power power))
             {
                 this.power = power;
-                powerUIController.CreateUI(this.power);
+                powerUIController.SettupUI(this.power);
             }
         }
     }

@@ -14,7 +14,7 @@ public enum PowerType
 }
 
 /// <summary>
-/// Manages a set of abilities associated with a specific power type.
+/// Manages a set of abilitiesUI associated with a specific power type.
 /// </summary>
 public class Power : MonoBehaviour
 {
@@ -35,7 +35,7 @@ public class Power : MonoBehaviour
     }
 
     /// <summary>
-    /// Return all abilities stored in this power.
+    /// Return all abilitiesUI stored in this power.
     /// </summary>
     public List<Ability> GetAbilities()
     {

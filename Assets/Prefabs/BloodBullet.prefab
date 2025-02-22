@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 7780939107855365954}
   - component: {fileID: 3143868923212673186}
   m_Layer: 0
-  m_Name: BloodBlade
+  m_Name: BloodBullet
   m_TagString: Power
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

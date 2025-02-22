@@ -2,13 +2,26 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Base class for all abilities in the game.
+/// Enum for all abilitiesUI behaviour.
+/// </summary>
+[Flags]
+public enum AbilityBehaviour
+{
+    None = 0,
+    Passive = 1 << 0,
+    NoTarget = 1 << 1,
+}
+
+/// <summary>
+/// Base class for all abilitiesUI in the game.
 /// </summary>
 public abstract class Ability : MonoBehaviour
 {
     [SerializeField] protected AbilitySO data;
 
     public AbilitySO Data => data;
+
+    public AbilityBehaviour behaviour => data.behaviour;
 
     /// <summary>
     /// Event triggered when the ability is activated.
@@ -20,23 +33,20 @@ public abstract class Ability : MonoBehaviour
     /// </summary>
     public void Activate()
     {
-        if (data == null)
+        if (Cooldown.Get(data.abilityName))
         {
-            Debug.LogWarning($"Ability {name} has no assigned AbilitySO.");
-            return;
+            if (!Cooldown.IsReady(data.abilityName)) return;
+            Cooldown.Use(data.abilityName);
         }
 
-        if (!Cooldown.IsReady(data.AbilityName))
-            return;
-
-        Cooldown.Use(data.AbilityName);
         HandleActivation();
         AbilityActivated?.Invoke();
     }
 
     protected virtual void Start()
     {
-        Cooldown.Set(data.AbilityName, data.Cooldown);
+        if (HasAnyFlags(AbilityBehaviour.NoTarget))
+            Cooldown.Set(data.abilityName, data.cooldown);
     }
 
     /// <summary>
@@ -44,4 +54,13 @@ public abstract class Ability : MonoBehaviour
     /// Must be implemented in derived classes.
     /// </summary>
     protected abstract void HandleActivation();
+
+    /// <summary>
+    /// Checks if the ability has at least one of the specified flags.
+    /// </summary>
+    /// <param name="flags">The flags to check.</param>
+    private bool HasAnyFlags(AbilityBehaviour flags)
+    {
+        return (behaviour & flags) != 0;
+    }
 }

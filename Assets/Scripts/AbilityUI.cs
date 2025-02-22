@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// Handles the UI visualization for abilities.
+/// Handles the UI visualization for abilitiesUI.
 /// </summary>
 
 public class AbilityUI : MonoBehaviour
@@ -11,43 +12,67 @@ public class AbilityUI : MonoBehaviour
     [SerializeField] private Image image1;
     [SerializeField] private Image image2;
 
-    /// <summary>
-    /// The cooldown duration in seconds.
-    /// </summary>
+    private AbilitySO data;
     private float timer;
+    private bool hasCooldown;
 
     /// <summary>
-    /// Initializes the component with a specified icon and timer.
+    /// SettupUI the component with a specified data.
     /// </summary>
-    /// <param name="icon">The sprite to be displayed as the icon.</param>
-    /// <param name="timer">The duration or countdown value to be set.</param>
-    public void Initialize(Sprite icon, float timer)
+    /// <param name="data">The data to be used.</param>
+    public void SettupUI(AbilitySO data)
     {
-        image1.sprite = icon;
-        this.timer = timer;
+        this.data = data;
+        image1.sprite = data.icon;
+        timer = data.cooldown;
+        hasCooldown = (data.behaviour & AbilityBehaviour.NoTarget) != 0;
+    }
+
+    /// <summary>
+    /// Reset the component by default.
+    /// </summary>
+    public void ResetUI()
+    {
+        data = null;
+        image1.sprite = default;
+        timer = 0f;
+        hasCooldown = false;
     }
 
     /// <summary>
     /// Called when the ability is activated.
     /// </summary>
-    public void OnActivated()
+    public void CooldownActivated()
     {
-        image2.fillAmount = 1;
-        button.enabled = false;
-    }
+        if (hasCooldown)
+        {
+            ExecuteEvents.Execute(button.gameObject,
+                            new PointerEventData(EventSystem.current),
+                            ExecuteEvents.pointerDownHandler);
 
-    private void Start()
-    {
-        button ??= GetComponentInChildren<Button>();
-        image1 ??= GetComponentInChildren<Image>();
-        image2 ??= GetComponentInChildren<Image>();
+            image2.fillAmount = 1;
+            button.interactable = false;
+        }
     }
 
     private void Update()
     {
+        if (!data)
+            return;
+
+        if (hasCooldown)
+            Cooldown();
+
+    }
+
+    /// <summary>
+    /// Handles the cooldown of a UI button.
+    /// </summary>
+    private void Cooldown()
+    {
         if (image2.fillAmount > 0)
             image2.fillAmount -= 1 / timer * Time.deltaTime;
         else
-            button.enabled = true;
+            button.interactable = true;
     }
 }

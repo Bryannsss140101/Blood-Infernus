@@ -10,6 +10,6 @@ public class RedRequiem : Ability
     /// </summary>
     protected override void HandleActivation()
     {
-        Debug.Log($"{data.AbilityName} activated!");
+        Debug.Log($"{data.abilityName} activated!");
     }
 }
