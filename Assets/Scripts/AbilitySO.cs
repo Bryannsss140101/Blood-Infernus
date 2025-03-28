@@ -6,16 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewAbility", menuName = "Abilities/Ability")]
 public class AbilitySO : ScriptableObject
 {
-    [SerializeField] private string abilityName;
-    [TextArea(3, 3)][SerializeField] private string description;
-    [SerializeField] private float cooldown;
-    [SerializeField] private Sprite icon;
-
-    public string AbilityName => abilityName;
-
-    public string Description => description;
-
-    public float Cooldown => cooldown;
-
-    public Sprite Icon => icon;
+    public string abilityName;
+    [TextArea] public string description;
+    public Sprite icon;
+    public AbilityBehaviour behaviour;
+    public float cooldown;
+    public float range;
 }

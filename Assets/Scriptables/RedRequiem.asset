@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db75c5763ee784e419e7cf1db2ce718a, type: 3}
-  m_Name: Ability1_BloodshardBarrage
+  m_Name: RedRequiem
   m_EditorClassIdentifier: 
-  abilityName: Bloodshard Barrage
-  description: 'Unleashes a barrage of hardened blood shards, damaging enemies on
-    impact.
+  abilityName: Red Requiem
+  description: 'Charges a bullet of condensed blood and fires it with devastating
+    force.
 
-    The shards pierce through units.'
-  cooldown: 17
-  icon: {fileID: -1054498611, guid: 415ca634d3e6c3f45a0c3b3584fd27bb, type: 3}
+    On impact, the bullet explodes, dealing area damage and stunning
+    nearby enemies.'
+  icon: {fileID: -1912862829, guid: 415ca634d3e6c3f45a0c3b3584fd27bb, type: 3}
+  behaviour: 16
+  cooldown: 100
+  range: 2.5

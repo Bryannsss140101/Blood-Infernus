@@ -1,53 +1,54 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Handles the UI visualization for abilities.
+/// Handles the UI visualization for abilitiesUI.
 /// </summary>
-
 public class AbilityUI : MonoBehaviour
 {
     [SerializeField] private Button button;
-    [SerializeField] private Image image1;
-    [SerializeField] private Image image2;
+    [SerializeField] private Image icon;
+    [SerializeField] private Image fill;
+
+    private AbilitySO data;
 
     /// <summary>
-    /// The cooldown duration in seconds.
+    /// SettupUI the component with a specified data.
     /// </summary>
-    private float timer;
-
-    /// <summary>
-    /// Initializes the component with a specified icon and timer.
-    /// </summary>
-    /// <param name="icon">The sprite to be displayed as the icon.</param>
-    /// <param name="timer">The duration or countdown value to be set.</param>
-    public void Initialize(Sprite icon, float timer)
+    /// <param name="data">The data to be used.</param>
+    public void SettupUI(AbilitySO data)
     {
-        image1.sprite = icon;
-        this.timer = timer;
+        this.data = data;
+        icon.sprite = data.icon;
+        fill.fillAmount = 0;
     }
 
     /// <summary>
-    /// Called when the ability is activated.
+    /// Reset the component by default.
     /// </summary>
-    public void OnActivated()
+    public void ResetUI()
     {
-        image2.fillAmount = 1;
-        button.enabled = false;
+        data = null;
+        icon.sprite = default;
+        fill.fillAmount = 0;
     }
 
-    private void Start()
+    /// <summary>
+    /// Time the cooldown of a UI button.
+    /// </summary>
+    public async void Timer()
     {
-        button ??= GetComponentInChildren<Button>();
-        image1 ??= GetComponentInChildren<Image>();
-        image2 ??= GetComponentInChildren<Image>();
-    }
+        fill.fillAmount = 1;
+        button.interactable = false;
 
-    private void Update()
-    {
-        if (image2.fillAmount > 0)
-            image2.fillAmount -= 1 / timer * Time.deltaTime;
-        else
-            button.enabled = true;
+        while (fill.fillAmount > 0)
+        {
+            fill.fillAmount -= 1 / data.cooldown * Time.deltaTime;
+            await UniTask.Yield();
+        }
+
+        fill.fillAmount = 0;
+        button.interactable = true;
     }
 }

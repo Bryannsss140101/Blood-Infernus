@@ -10,6 +10,15 @@ public sealed class BloodshardBarrage : Ability
     /// </summary>
     protected override void HandleActivation()
     {
-        Debug.Log($"{data.AbilityName} activated!");
+        RaycastHit hit;
+
+        if (Physics.Raycast(owner.transform.position, owner.transform.forward, out hit, data.range))
+        {
+            Debug.DrawLine(owner.transform.position, hit.point, Color.red);
+        }
+        else
+        {
+            Debug.DrawLine(owner.transform.position, owner.transform.position * data.range, Color.red);
+        }
     }
 }

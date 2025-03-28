@@ -3,13 +3,13 @@ using UnityEngine;
 /// <summary>
 /// A specific ability.
 /// </summary>
-public class ScarletDownpour : Ability
+public sealed class ScarletDownpour : Ability
 {
     /// <summary>
     /// Handles the activation logic of the specific ability
     /// </summary>
     protected override void HandleActivation()
     {
-        Debug.Log($"{data.AbilityName} activated!");
+        Debug.Log($"{data.abilityName} activated!");
     }
 }

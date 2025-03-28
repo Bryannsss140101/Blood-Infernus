@@ -5,29 +5,25 @@ using UnityEngine;
 /// </summary>
 public class PlayerPower : MonoBehaviour
 {
-    [SerializeField] private PowerUIController powerUIController;
+    [SerializeField] private PowerUI powerUIController;
 
     private Power power;
+    private float radius;
 
     public void HandlePower()
     {
-        if (powerUIController.IsCreated)
+        if (powerUIController.IsReady)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-                power.GetAbility(0).Activate();
+            if (Input.GetButtonDown("Button Square"))
+                power.UseAbility(0);
 
-            if (Input.GetKeyDown(KeyCode.W))
-                power.GetAbility(1).Activate();
-
-            if (Input.GetKeyDown(KeyCode.E))
-                power.GetAbility(2).Activate();
-
-            if (Input.GetKeyDown(KeyCode.R))
-                power.GetAbility(3).Activate();
+            if (Input.GetButtonDown("Button L1"))
+                powerUIController.ResetUI(power);
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            powerUIController.DestroyUI(power);
+    private void Start()
+    {
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,12 +31,12 @@ public class PlayerPower : MonoBehaviour
         if (other.CompareTag("Power"))
         {
             if (!this.power)
-                powerUIController.DestroyUI(this.power);
+                powerUIController.ResetUI(this.power);
 
             if (other.TryGetComponent(out Power power))
             {
                 this.power = power;
-                powerUIController.CreateUI(this.power);
+                powerUIController.SettupUI(this.power);
             }
         }
     }

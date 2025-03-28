@@ -9,6 +9,21 @@ public static class Cooldown
     private static readonly Dictionary<string, CooldownData> cooldowns = new();
 
     /// <summary>
+    /// Get a specific cooldown.
+    /// </summary>
+    /// <param abilityName="id">The unique identifier.</param>
+    public static bool Get(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            Debug.LogWarning("Attempted to set cooldown with an invalid ID.");
+            return false;
+        }
+        
+        return cooldowns.ContainsKey(id);
+    }
+
+    /// <summary>
     /// Set a specific cooldown.
     /// </summary>
     /// <param abilityName="id">The unique identifier.</param>
