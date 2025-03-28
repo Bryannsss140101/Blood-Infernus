@@ -1,20 +1,17 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
 /// Handles the UI visualization for abilitiesUI.
 /// </summary>
-
 public class AbilityUI : MonoBehaviour
 {
     [SerializeField] private Button button;
-    [SerializeField] private Image image1;
-    [SerializeField] private Image image2;
+    [SerializeField] private Image icon;
+    [SerializeField] private Image fill;
 
     private AbilitySO data;
-    private float timer;
-    private bool hasCooldown;
 
     /// <summary>
     /// SettupUI the component with a specified data.
@@ -23,9 +20,8 @@ public class AbilityUI : MonoBehaviour
     public void SettupUI(AbilitySO data)
     {
         this.data = data;
-        image1.sprite = data.icon;
-        timer = data.cooldown;
-        hasCooldown = (data.behaviour & AbilityBehaviour.NoTarget) != 0;
+        icon.sprite = data.icon;
+        fill.fillAmount = 0;
     }
 
     /// <summary>
@@ -34,45 +30,25 @@ public class AbilityUI : MonoBehaviour
     public void ResetUI()
     {
         data = null;
-        image1.sprite = default;
-        timer = 0f;
-        hasCooldown = false;
+        icon.sprite = default;
+        fill.fillAmount = 0;
     }
 
     /// <summary>
-    /// Called when the ability is activated.
+    /// Time the cooldown of a UI button.
     /// </summary>
-    public void CooldownActivated()
+    public async void Timer()
     {
-        if (hasCooldown)
+        fill.fillAmount = 1;
+        button.interactable = false;
+
+        while (fill.fillAmount > 0)
         {
-            ExecuteEvents.Execute(button.gameObject,
-                            new PointerEventData(EventSystem.current),
-                            ExecuteEvents.pointerDownHandler);
-
-            image2.fillAmount = 1;
-            button.interactable = false;
+            fill.fillAmount -= 1 / data.cooldown * Time.deltaTime;
+            await UniTask.Yield();
         }
-    }
 
-    private void Update()
-    {
-        if (!data)
-            return;
-
-        if (hasCooldown)
-            Cooldown();
-
-    }
-
-    /// <summary>
-    /// Handles the cooldown of a UI button.
-    /// </summary>
-    private void Cooldown()
-    {
-        if (image2.fillAmount > 0)
-            image2.fillAmount -= 1 / timer * Time.deltaTime;
-        else
-            button.interactable = true;
+        fill.fillAmount = 0;
+        button.interactable = true;
     }
 }

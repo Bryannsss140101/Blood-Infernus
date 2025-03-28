@@ -7,46 +7,50 @@ using UnityEngine;
 [Flags]
 public enum AbilityBehaviour
 {
-    None = 0,
-    Passive = 1 << 0,
-    NoTarget = 1 << 1,
+    NoTarget = 1 << 0,      // No indicator, activates instantly.
+    Target = 1 << 2,        // Highlights the target unit.
+    Point = 1 << 3,         // Green circle at the target location.
+    Directional = 1 << 4,   // Arrow showing the projectile path.
+    AOE = 1 << 5            // Green circle showing the affected area.
 }
 
 /// <summary>
-/// Base class for all abilitiesUI in the game.
+/// Base class for all abilities in the game.
 /// </summary>
 public abstract class Ability : MonoBehaviour
 {
     [SerializeField] protected AbilitySO data;
 
+    protected GameObject owner;
+
     public AbilitySO Data => data;
 
-    public AbilityBehaviour behaviour => data.behaviour;
+    public AbilityBehaviour Behaviour => data.behaviour;
 
-    /// <summary>
-    /// Event triggered when the ability is activated.
-    /// </summary>
-    public event Action AbilityActivated;
+    public event Action OnAbilityCreated;
 
     /// <summary>
     /// Activates the ability.
     /// </summary>
-    public void Activate()
+    /// <param name="onActivated">A callback to be executed after the activation process is complete.</param>
+    public void Use()
     {
-        if (Cooldown.Get(data.abilityName))
-        {
-            if (!Cooldown.IsReady(data.abilityName)) return;
-            Cooldown.Use(data.abilityName);
-        }
+        if (!Cooldown.IsReady(data.abilityName))
+            return;
 
+        // Events
+        OnAbilityCreated?.Invoke();
+
+        // Logic
         HandleActivation();
-        AbilityActivated?.Invoke();
+
+        // Cooldown
+        Cooldown.Use(data.abilityName);
     }
 
     protected virtual void Start()
     {
-        if (HasAnyFlags(AbilityBehaviour.NoTarget))
-            Cooldown.Set(data.abilityName, data.cooldown);
+        Cooldown.Set(data.abilityName, data.cooldown);
     }
 
     /// <summary>
@@ -54,13 +58,4 @@ public abstract class Ability : MonoBehaviour
     /// Must be implemented in derived classes.
     /// </summary>
     protected abstract void HandleActivation();
-
-    /// <summary>
-    /// Checks if the ability has at least one of the specified flags.
-    /// </summary>
-    /// <param name="flags">The flags to check.</param>
-    private bool HasAnyFlags(AbilityBehaviour flags)
-    {
-        return (behaviour & flags) != 0;
-    }
 }

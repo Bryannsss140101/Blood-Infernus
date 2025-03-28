@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// A specific ability.
 /// </summary>
-public class ScarletDownpour : Ability
+public sealed class ScarletDownpour : Ability
 {
     /// <summary>
     /// Handles the activation logic of the specific ability

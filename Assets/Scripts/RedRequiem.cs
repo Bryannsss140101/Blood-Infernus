@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// A specific ability.
 /// </summary>
-public class RedRequiem : Ability
+public sealed class RedRequiem : Ability
 {
     /// <summary>
     /// Handles the activation logic of the specific ability

@@ -7,8 +7,9 @@ using UnityEngine;
 public class AbilitySO : ScriptableObject
 {
     public string abilityName;
-    public string description;
-    public float cooldown;
-    public AbilityBehaviour behaviour;
+    [TextArea] public string description;
     public Sprite icon;
+    public AbilityBehaviour behaviour;
+    public float cooldown;
+    public float range;
 }

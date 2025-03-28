@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// A specific ability.
 /// </summary>
-public class CrimsonDeadeye : Ability
+public sealed class BloodShoot : Ability
 {
     /// <summary>
     /// Handles the activation logic of the specific ability

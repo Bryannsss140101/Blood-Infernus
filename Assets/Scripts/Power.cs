@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -8,9 +6,9 @@ using UnityEngine;
 /// </summary>
 public enum PowerType
 {
-    BLOOD_BULLET,
-    BLOOD_BLADE,
-    BLOOD_PUMP
+    BloodBullet,
+    BloodBlade,
+    BloodPump
 }
 
 /// <summary>
@@ -25,22 +23,25 @@ public class Power : MonoBehaviour
     /// <summary>
     /// Return an ability by its assigned key.
     /// </summary>
-    /// <param abilityName="id">The key associated with the ability.</param>
-    public Ability GetAbility(int id)
+    /// <param abilityName="index">The key associated with the ability.</param>
+    public Ability GetAbility(int index)
     {
-        if (abilities.TryGetValue(id, out var ability))
+        if (abilities.TryGetValue(index, out var ability))
             return ability;
 
-        throw new KeyNotFoundException($"Ability with key '{id}' not found.");
+        throw new KeyNotFoundException($"Ability with key '{index}' not found.");
     }
 
     /// <summary>
-    /// Return all abilitiesUI stored in this power.
+    /// Use an ability by its assigned key.
     /// </summary>
-    public List<Ability> GetAbilities()
+    /// <param abilityName="index">The key associated with the ability.</param>
+    public void UseAbility(int index)
     {
-        return abilities.Count > 0 ? abilities.Values.ToList() :
-            throw new InvalidOperationException("No abilities available.");
+        if (!abilities.TryGetValue(index, out var ability))
+            throw new KeyNotFoundException($"Ability with key '{index}' not found.");
+
+        ability.Use();
     }
 
     private void Start()

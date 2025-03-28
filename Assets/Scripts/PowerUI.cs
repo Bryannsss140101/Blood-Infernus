@@ -4,13 +4,13 @@ using UnityEngine;
 /// <summary>
 /// Controls the UI elements for displaying power abilitiesUI.
 /// </summary>
-public class PowerUIController : MonoBehaviour
+public class PowerUI : MonoBehaviour
 {
     [SerializeField] private AbilityUI[] abilitiesUI;
 
     private bool isCreated;
 
-    public bool IsCreated { get => isCreated; }
+    public bool IsReady { get => isCreated; }
 
 
     /// <summary>
@@ -28,7 +28,7 @@ public class PowerUIController : MonoBehaviour
             var abilityUI = abilitiesUI[i];
 
             abilityUI.SettupUI(ability.Data);
-            ability.AbilityActivated += abilityUI.CooldownActivated;
+            ability.OnAbilityCreated += abilityUI.Timer;
         }
 
         isCreated = true;
@@ -49,7 +49,7 @@ public class PowerUIController : MonoBehaviour
             var abilityUI = abilitiesUI[i];
 
             abilityUI.ResetUI();
-            ability.AbilityActivated -= abilityUI.CooldownActivated;
+            ability.OnAbilityCreated -= abilityUI.Timer;
             Cooldown.Reset(ability.Data.abilityName);
         }
 

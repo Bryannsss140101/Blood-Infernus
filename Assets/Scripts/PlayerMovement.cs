@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 /// <summary>
 /// Handles player movement.
@@ -21,15 +20,11 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         Translate();
-
-        // Dash();
     }
 
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
-
-        // Cooldown.Set("Dash", 0.5f);
     }
 
     /// <summary>
@@ -37,16 +32,16 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void Translate()
     {
-        float horizontal = Input.GetAxisRaw("PHorizontal");
-        float vertical = Input.GetAxisRaw("PVertical");
+        float horizontal = Input.GetAxisRaw("Joystick Horizontal");
+        float vertical = Input.GetAxisRaw("Joystick Vertical");
 
-        if (horizontal != 0 || vertical != 0)
-        {
-            direction = new Vector3(horizontal, 0f, vertical).normalized;
-            velocity = speed * Time.deltaTime * direction;
+        direction = new Vector3(horizontal, 0f, vertical);
 
-            characterController.Move(velocity);
-        }
+        if (direction.magnitude > 1)
+            direction.Normalize();
+
+        velocity = speed * Time.deltaTime * direction;
+        characterController.Move(velocity);
     }
 
     /*private void Dash()

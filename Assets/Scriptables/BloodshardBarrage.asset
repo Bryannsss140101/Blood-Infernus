@@ -16,5 +16,5 @@ MonoBehaviour:
   description: "Unleashes a barrage of hardened blood shards, damaging enemies on
     impact.\r\nThe shards pierce through units.\r"
   cooldown: 0
-  behaviour: 2
+  behaviour: 1
   icon: {fileID: -1080266160, guid: 415ca634d3e6c3f45a0c3b3584fd27bb, type: 3}

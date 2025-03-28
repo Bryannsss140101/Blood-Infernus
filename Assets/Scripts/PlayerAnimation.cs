@@ -16,8 +16,8 @@ public class PlayerAnimation : MonoBehaviour
             return;
 
         var direction = new Vector3(
-            Input.GetAxisRaw("PHorizontal"), 0f,
-            Input.GetAxisRaw("PVertical"));
+            Input.GetAxisRaw("Joystick Horizontal"), 0f,
+            Input.GetAxisRaw("Joystick Vertical"));
 
         if (direction.sqrMagnitude > 1)
             direction.Normalize();

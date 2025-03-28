@@ -18,6 +18,7 @@ MonoBehaviour:
 
     Enemies hit take damage and are slowed
     on impact.'
-  cooldown: 20
-  behaviour: 2
   icon: {fileID: -1054498611, guid: 415ca634d3e6c3f45a0c3b3584fd27bb, type: 3}
+  behaviour: 40
+  cooldown: 20
+  range: 10
