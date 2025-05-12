@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : CharacterMovement
+namespace Character
 {
-    public PlayerMovement(float speed)
+    public class PlayerMovement : CharacterMovement
     {
-        this.speed = speed;
-    }
+        public PlayerMovement(float speed)
+        {
+            this.speed = speed;
+        }
 
-    public override Vector3 Velocity()
-    {
-        direction = new(
-            Input.GetAxisRaw("Horizontal"), 0f,
-            Input.GetAxisRaw("Vertical"));
+        public override Vector3 Velocity()
+        {
+            direction = new(
+                Input.GetAxisRaw("Horizontal"), 0f,
+                Input.GetAxisRaw("Vertical"));
 
-        if (direction.magnitude > 1)
-            direction.Normalize();
+            if (direction.magnitude > 1)
+                direction.Normalize();
 
-        return speed * Time.deltaTime * direction;
+            return speed * Time.deltaTime * direction;
+        }
     }
 }

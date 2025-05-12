@@ -2,23 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace Character
 {
-    [Header("Controller Component")]
-    [SerializeField] private CharacterController controller;
-
-    [Header("Movement Component")]
-    [SerializeField] private float speed;
-    private CharacterMovement movement;
-
-    private void Start()
+    public class PlayerController : MonoBehaviour
     {
-        controller = GetComponent<CharacterController>();
-        movement = new PlayerMovement(speed);
-    }
+        [Header("Controller Component")]
+        [SerializeField] private CharacterController controller;
 
-    private void Update()
-    {
-        controller.Move(movement.Velocity());
+        [Header("Movement Component")]
+        [SerializeField] private float speed;
+        private CharacterMovement movement;
+
+        private void Start()
+        {
+            controller = GetComponent<CharacterController>();
+            movement = new PlayerMovement(speed);
+        }
+
+        private void Update()
+        {
+            controller.Move(movement.Velocity());
+        }
     }
 }
