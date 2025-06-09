@@ -11,7 +11,7 @@ namespace Character
         private CharacterMovement movement;
 
         [Header("Animator Component")]
-        private PlayerAnimator animator;
+        private CharacterAnimator animator;
 
         private void Start()
         {
