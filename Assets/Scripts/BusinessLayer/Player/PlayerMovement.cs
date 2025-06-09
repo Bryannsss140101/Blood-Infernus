@@ -11,7 +11,7 @@ namespace Character
             this.speed = speed;
         }
 
-        public override Vector3 Velocity()
+        public override void Move(Transform transform)
         {
             direction = new(
                 Input.GetAxisRaw("Horizontal"), 0f,
@@ -20,7 +20,9 @@ namespace Character
             if (direction.magnitude > 1)
                 direction.Normalize();
 
-            return speed * Time.deltaTime * direction;
+            velocity = speed * Time.deltaTime * direction;
+
+            transform.position += velocity;
         }
     }
 }

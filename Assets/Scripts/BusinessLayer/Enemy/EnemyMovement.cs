@@ -10,7 +10,7 @@ namespace Character
         {
         }
 
-        public override Vector3 Velocity()
+        public override void Move(Transform transform)
         {
             throw new System.NotImplementedException();
         }

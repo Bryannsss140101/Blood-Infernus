@@ -6,22 +6,23 @@ namespace Character
 {
     public class PlayerController : MonoBehaviour
     {
-        [Header("Controller Component")]
-        [SerializeField] private CharacterController controller;
-
         [Header("Movement Component")]
         [SerializeField] private float speed;
         private CharacterMovement movement;
 
+        [Header("Animator Component")]
+        private PlayerAnimator animator;
+
         private void Start()
         {
-            controller = GetComponent<CharacterController>();
             movement = new PlayerMovement(speed);
+            animator = new PlayerAnimator(GetComponent<Animator>());
         }
 
         private void Update()
         {
-            controller.Move(movement.Velocity());
+            movement.Move(transform);
+            animator.Move(movement);
         }
     }
 }
