@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Character
@@ -14,6 +12,6 @@ namespace Character
         public Vector3 Direction { get => direction; }
         public Vector3 Velocity { get => velocity; }
 
-        public abstract void Move(Transform transform);
+        public abstract void Movement(Transform transform);
     }
 }

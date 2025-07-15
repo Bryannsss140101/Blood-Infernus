@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Character
@@ -8,6 +6,7 @@ namespace Character
     {
         [Header("Movement Component")]
         [SerializeField] private float speed;
+        [SerializeField] private float speedMultiplier;
         private CharacterMovement movement;
 
         [Header("Animator Component")]
@@ -16,13 +15,13 @@ namespace Character
         private void Start()
         {
             movement = new PlayerMovement(speed);
-            animator = new PlayerAnimator(GetComponent<Animator>());
+            // animator = new PlayerAnimator(GetComponent<Animator>());
         }
 
         private void Update()
         {
-            movement.Move(transform);
-            animator.Move(movement);
+            movement.Movement(transform);
+            // animator.Move(movement);
         }
     }
 }

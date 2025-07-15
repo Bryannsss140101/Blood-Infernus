@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Character
@@ -10,7 +8,7 @@ namespace Character
         {
         }
 
-        public override void Move(Transform transform)
+        public override void Movement(Transform transform)
         {
             throw new System.NotImplementedException();
         }
